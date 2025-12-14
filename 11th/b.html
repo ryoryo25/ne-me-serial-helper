@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>11th『排他的ファイター』Type-B - シリアルまとめて入力</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <script defer src="../assets/js/main.js"></script>
+</head>
+<body>
+  <main class="container">
+    <h1>11th『排他的ファイター』Type-B - シリアルまとめて入力</h1>
+
+    <form id="serial-form" class="form">
+      <label>シリアルナンバー（複数行可）
+        <textarea id="serial" rows="5" placeholder="1行に1つずつ入力してください"></textarea>
+      </label>
+
+      <fieldset>
+        <legend>プレゼント番号</legend>
+        <label><input type="radio" name="present" value="1" checked> 1</label>
+        <label><input type="radio" name="present" value="2"> 2</label>
+        <label><input type="radio" name="present" value="3"> 3</label>
+      </fieldset>
+
+      <label>メールアドレス
+        <input id="email" type="email">
+      </label>
+
+      <label>氏名
+        <input id="name" type="text">
+      </label>
+
+      <label>フリガナ
+        <input id="name_kana" type="text">
+      </label>
+
+      <label>年齢
+        <input id="age" type="number" min="0" max="150">
+      </label>
+
+      <fieldset>
+        <legend>性別</legend>
+        <label><input type="radio" name="gender" value="男" checked> 男</label>
+        <label><input type="radio" name="gender" value="女"> 女</label>
+      </fieldset>
+
+      <div class="row">
+        <label>郵便番号
+          <div class="inline">
+            <input id="zip1" maxlength="3" size="3"> - <input id="zip2" maxlength="4" size="4">
+            <button type="button" id="zip-lookup">住所を自動入力</button>
+          </div>
+        </label>
+      </div>
+
+      <label>都道府県
+        <input id="prefecture" type="text" disabled>
+      </label>
+
+      <label>住所（都道府県以降）
+        <input id="address" type="text">
+      </label>
+
+      <div class="row">
+        <label>電話番号
+          <div class="inline">
+            <input id="tel1" maxlength="5" size="5"> - <input id="tel2" maxlength="4" size="4"> - <input id="tel3" maxlength="4" size="4">
+          </div>
+        </label>
+      </div>
+
+      <div class="actions">
+        <button type="button" id="preview">確認</button>
+        <button type="reset">リセット</button>
+      </div>
+    </form>
+
+    <p><a href="/">トップに戻る</a></p>
+  </main>
+</body>
+</html>

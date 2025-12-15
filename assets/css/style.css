@@ -23,5 +23,7 @@ a{color:var(--accent)}
 
 input[disabled]{background:#f3f4f6;color:#6b7280}
 
+textarea.invalid{border-color:#e53e3e;background:#fff5f5}
+
 .send-status{border-top:1px solid #eee;padding-top:.5rem;margin-top:.5rem;max-height:220px;overflow:auto;font-size:.95rem}
 .send-status > div{padding:.25rem 0;border-bottom:1px dashed #f1f5f9}

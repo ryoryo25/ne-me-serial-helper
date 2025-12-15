@@ -28,6 +28,10 @@ document.addEventListener('DOMContentLoaded', () => {
     return ''
   }
 
+  function isValidSerial(s){
+    return /^[A-Za-z0-9]{8}$/.test((s||'').trim())
+  }
+
   async function lookupZip(){
     if(!zip1 || !zip2 || !prefecture || !address) return
     const z1 = (zip1.value||'').replace(/\D/g,'')
@@ -77,6 +81,18 @@ document.addEventListener('DOMContentLoaded', () => {
     preview.addEventListener('click', ()=>{
       const form = document.getElementById('serial-form')
       if(!form) return
+      const raw = (q('serial') && q('serial').value) || ''
+      const lines = raw.split(/\r?\n/).map(s=>s.trim()).filter(Boolean)
+      const invalid = lines.filter(l => !isValidSerial(l))
+      const textarea = q('serial')
+      if(invalid.length){
+        if(textarea) textarea.classList.add('invalid')
+        alert('以下のシリアルは無効です（8桁の英数字のみ）：\n' + invalid.join('\n'))
+        return
+      } else {
+        if(textarea) textarea.classList.remove('invalid')
+      }
+
       const data = {
         serials: (q('serial') && q('serial').value) || '',
         present: (form.querySelector('input[name="present"]:checked') || {}).value || '',
@@ -119,6 +135,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const raw = (q('serial') && q('serial').value) || ''
     const lines = raw.split(/\r?\n/).map(s=>s.trim()).filter(Boolean)
     if(lines.length===0){ alert('シリアルが入力されていません'); return }
+    const invalid = lines.filter(l => !isValidSerial(l))
+    if(invalid.length){
+      alert('以下のシリアルは無効です（送信を中止しました）：\n' + invalid.join('\n'))
+      return
+    }
 
     const endpoint = (q('endpoint') && q('endpoint').value || '').trim()
     const doSend = (q('do-send') && q('do-send').checked) || false

@@ -70,10 +70,28 @@
         </label>
       </div>
 
+      <label><input id="agree" type="checkbox"> 利用規約に同意する</label>
+
       <div class="actions">
         <button type="button" id="preview">確認</button>
         <button type="reset">リセット</button>
       </div>
+
+      <fieldset>
+        <legend>送信設定</legend>
+        <label>送信先URL
+          <input id="endpoint" type="url" value="https://krs.bz/kingrecords/m/d39ch9m" placeholder="https://example.com/submit">
+        </label>
+        <label><input id="do-send" type="checkbox"> 実際に送信する</label>
+        <label>送信間隔 (ms)
+          <input id="delay" type="number" min="0" value="500">
+        </label>
+        <div class="actions">
+          <button type="button" id="start-send">送信開始</button>
+          <button type="button" id="stop-send" disabled>停止</button>
+        </div>
+        <div id="send-status" class="send-status" aria-live="polite"></div>
+      </fieldset>
     </form>
 
     <p><a href="../">トップに戻る</a></p>

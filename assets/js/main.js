@@ -165,12 +165,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if(doSend && endpoint){
         try{
-          const res = await fetch(endpoint, {method:'POST', body: new URLSearchParams(payload)})
-          if(res.ok){
-            entry.textContent = `成功: ${serial} (HTTP ${res.status})`
-          } else {
-            entry.textContent = `失敗: ${serial} (HTTP ${res.status})`
+          const res = await fetch(endpoint, {method:'POST', body: new URLSearchParams(payload), redirect: 'follow'})
+          let msg = res.ok ? `成功: ${serial} (HTTP ${res.status})` : `失敗: ${serial} (HTTP ${res.status})`
+          if(res.redirected){
+            msg += ` → リダイレクト先: ${res.url}`
           }
+          // show a short snippet of the response body for debugging
+          try{
+            const text = await res.text()
+            if(text && text.trim()){
+              const snippet = text.trim().replace(/\s+/g,' ').slice(0,30)
+              msg += `\nレスポンス: ${snippet}${text.length>30? '…': ''}`
+            }
+          }catch(_){ /* ignore body read errors */ }
+          entry.textContent = msg
         }catch(e){
           entry.textContent = `エラー: ${serial} (${e.message})`
         }

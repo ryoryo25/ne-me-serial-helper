@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>12th『愛くださいませ/ここでファーストキッス』Type-A, C - シリアルまとめて入力</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <script defer src="../assets/js/main.12.js"></script>
+</head>
+<body>
+  <main class="container">
+    <h1>12th『愛くださいませ/ここでファーストキッス』Type-A, C - シリアルまとめて入力</h1>
+
+    <form id="serial-form" class="form">
+      <label>シリアルナンバー（複数行可）
+        <textarea id="serial" rows="5" placeholder="1行に1つずつ入力してください"></textarea>
+      </label>
+
+      <fieldset id="present-fieldset">
+        <legend>プレゼント番号</legend>
+        <label><input type="radio" name="present" value="1">(1)≠MEスペシャルライブ</label>
+        <label><input type="radio" name="present" value="2">(2)ノイミー会＠東京</label>
+        <label><input type="radio" name="present" value="4">(4)≠MEメンバー個別撮影会</label>
+        <label><input type="radio" name="present" value="5">(5)≠MEソロポスターサイン会</label>
+        <label><input type="radio" name="present" value="6">(6)≠ME サンリオキャラクタースペシャルライブ</label>
+      </fieldset>
+
+      <fieldset id="noime-kai-venue1-fieldset" hidden>
+        <legend>ノイミー会＠東京 部選択</legend>
+        <label><input type="radio" name="noime_kai_venue1" value="1">第一部：15:00-16:00(予定)</label>
+        <label><input type="radio" name="noime_kai_venue1" value="2">第二部：18:00-19:00(予定)</label>
+      </fieldset>
+
+      <fieldset id="noime-kai-venue2-fieldset" hidden>
+        <legend>ノイミー会＠大阪 部選択</legend>
+        <label><input type="radio" name="noime_kai_venue2" value="1">第一部：14:30-15:30(予定)</label>
+        <label><input type="radio" name="noime_kai_venue2" value="2">第二部：17:00-18:00(予定)</label>
+      </fieldset>
+
+      <fieldset id="kosatsu-member-fieldset" hidden>
+        <legend>≠MEメンバー個別撮影会 メンバー選択</legend>
+        <label><input type="radio" name="kosatsu_member" value="1">尾木波菜</label>
+        <label><input type="radio" name="kosatsu_member" value="2">落合希来里</label>
+        <label><input type="radio" name="kosatsu_member" value="3">蟹沢萌子</label>
+        <label><input type="radio" name="kosatsu_member" value="4">河口夏音</label>
+        <label><input type="radio" name="kosatsu_member" value="5">川中子奈月心</label>
+        <label><input type="radio" name="kosatsu_member" value="6">櫻井もも</label>
+        <label><input type="radio" name="kosatsu_member" value="7">鈴木瞳美</label>
+        <label><input type="radio" name="kosatsu_member" value="8">谷崎早耶</label>
+        <label><input type="radio" name="kosatsu_member" value="9">冨田菜々風</label>
+        <label><input type="radio" name="kosatsu_member" value="10">永田詩央里</label>
+        <label><input type="radio" name="kosatsu_member" value="11">本田珠由記</label>
+      </fieldset>
+
+      <fieldset id="sign-poster-member-fieldset" hidden>
+        <legend>≠MEソロポスターサイン会 メンバー選択</legend>
+        <label><input type="radio" name="sign_poster_member" value="1">尾木波菜</label>
+        <label><input type="radio" name="sign_poster_member" value="2">落合希来里</label>
+        <label><input type="radio" name="sign_poster_member" value="3">蟹沢萌子</label>
+        <label><input type="radio" name="sign_poster_member" value="4">河口夏音</label>
+        <label><input type="radio" name="sign_poster_member" value="5">川中子奈月心</label>
+        <label><input type="radio" name="sign_poster_member" value="6">櫻井もも</label>
+        <label><input type="radio" name="sign_poster_member" value="7">鈴木瞳美</label>
+        <label><input type="radio" name="sign_poster_member" value="8">谷崎早耶</label>
+        <label><input type="radio" name="sign_poster_member" value="9">冨田菜々風</label>
+        <label><input type="radio" name="sign_poster_member" value="10">永田詩央里</label>
+        <label><input type="radio" name="sign_poster_member" value="11">本田珠由記</label>
+      </fieldset>
+
+      <label>メールアドレス
+        <input id="email" type="email" autocomplete="email">
+      </label>
+
+      <label>氏名
+        <input id="name" type="text" autocomplete="name">
+      </label>
+
+      <label>ふりがな
+        <input id="name_kana" type="text" autocomplete="name">
+      </label>
+
+      <label>年齢
+        <input id="age" type="number" min="0" max="150">
+      </label>
+
+      <fieldset>
+        <legend>性別</legend>
+        <label><input type="radio" name="gender" value="男" checked> 男</label>
+        <label><input type="radio" name="gender" value="女"> 女</label>
+      </fieldset>
+
+      <div class="row">
+        <label>郵便番号
+          <div class="inline">
+            <input id="zip1" maxlength="3" size="3" autocomplete="postal-code"> - <input id="zip2" maxlength="4" size="4" autocomplete="postal-code">
+            <button type="button" id="zip-lookup">住所を自動入力</button>
+          </div>
+        </label>
+      </div>
+
+      <label>都道府県
+        <input id="prefecture" type="text" disabled>
+      </label>
+
+      <label>住所（都道府県以降）
+        <input id="address" type="text" autocomplete="street-address">
+      </label>
+
+      <div class="row">
+        <label>電話番号
+          <div class="inline">
+            <input id="tel1" maxlength="5" size="5" autocomplete="tel"> - <input id="tel2" maxlength="4" size="4" autocomplete="tel"> - <input id="tel3" maxlength="4" size="4" autocomplete="tel">
+          </div>
+        </label>
+      </div>
+
+      <label><input id="agree" type="checkbox"> 注意事項に同意する</label>
+
+      <div class="actions">
+        <button type="button" id="preview">確認</button>
+        <button type="reset">リセット</button>
+      </div>
+
+      <fieldset>
+        <legend>送信設定</legend>
+        <label>送信先URL
+          <input id="endpoint" type="url" value="https://krs.bz/kingrecords/m/9n3e6k7" placeholder="https://example.com/submit">
+        </label>
+        <label><input id="do-send" type="checkbox"> 実際に送信する</label>
+        <label>送信間隔 (ms)
+          <input id="delay" type="number" min="0" value="500">
+        </label>
+        <div class="actions">
+          <button type="button" id="start-send">送信開始</button>
+          <button type="button" id="stop-send" disabled>停止</button>
+        </div>
+        <div id="send-status" class="send-status" aria-live="polite"></div>
+      </fieldset>
+    </form>
+
+    <p><a href="../">トップに戻る</a></p>
+  </main>
+</body>
+</html>

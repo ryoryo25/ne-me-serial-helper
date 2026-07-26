@@ -216,102 +216,105 @@ document.addEventListener('DOMContentLoaded', () => {
     '__name': '',
   }
 
-  // send sequence
-  const startBtn = q('start-send')
-  const stopBtn = q('stop-send')
-  const statusEl = q('send-status')
-  let stopRequested = false
+  // curl generator
+  const generateBtn = q('generate-curl')
+  const copyBtn = q('copy-curl')
+  const curlOutput = q('curl-output')
+  const copyMsg = q('copy-message')
 
-  function setButtonsRunning(running){
-    if(startBtn) startBtn.disabled = running
-    if(stopBtn) stopBtn.disabled = !running
-  }
-
-  async function sleep(ms){ return new Promise(resolve=>setTimeout(resolve, ms)) }
-
-  async function sendSequence(){
+  function generateCurlCommands(){
     const form = document.getElementById('serial-form')
     if(!form) return
     const raw = (q('serial') && q('serial').value) || ''
     const lines = raw.split(/\r?\n/).map(s=>s.trim()).filter(Boolean)
-    if(lines.length===0){ alert('シリアルが入力されていません'); return }
-    const invalid = lines.filter(l => !isValidSerial(l))
-    if(invalid.length){
-      alert('以下のシリアルは無効です（送信を中止しました）：\n' + invalid.join('\n'))
+    const textarea = q('serial')
+    if(lines.length===0){
+      if(textarea) textarea.classList.add('invalid')
+      alert('シリアルが入力されていません')
       return
     }
-
-    const endpoint = (q('endpoint') && q('endpoint').value || '').trim()
-    const doSend = (q('do-send') && q('do-send').checked) || false
-    const delay = parseInt((q('delay') && q('delay').value) || '0', 10) || 0
-
-    statusEl.innerHTML = ''
-    stopRequested = false
-    setButtonsRunning(true)
-
-    for(let i=0;i<lines.length;i++){
-      if(stopRequested) break
-      const serial = lines[i]
-      const entry = document.createElement('div')
-      entry.textContent = `送信中: ${serial}`
-      statusEl.appendChild(entry)
-
-      const payload = {
-        ...commonFixedValues,
-        ...fixedValues,
-        [formNameMap['serial']]: serial,
-        [formNameMap['present']]: (form.querySelector('input[name="present"]:checked') || {}).value || '',
-        [formNameMap['noime_kai_venue1']]: (form.querySelector('input[name="noime_kai_venue1"]:checked') || {}).value || '',
-        [formNameMap['noime_kai_venue2']]: (form.querySelector('input[name="noime_kai_venue2"]:checked') || {}).value || '',
-        [formNameMap['kosatsu_member']]: (form.querySelector('input[name="kosatsu_member"]:checked') || {}).value || '',
-        [formNameMap['sign_poster_member']]: (form.querySelector('input[name="sign_poster_member"]:checked') || {}).value || '',
-        [formNameMap['email']]: (q('email') && q('email').value) || '',
-        [formNameMap['name']]: (q('name') && q('name').value) || '',
-        [formNameMap['name_kana']]: (q('name_kana') && q('name_kana').value) || '',
-        [formNameMap['age']]: (q('age') && q('age').value) || '',
-        [formNameMap['gender']]: genderToCode((form.querySelector('input[name="gender"]:checked') || {}).value || ''),
-        [formNameMap['zip1']]: (q('zip1') && q('zip1').value) || '',
-        [formNameMap['zip2']]: (q('zip2') && q('zip2').value) || '',
-        [formNameMap['prefecture']]: prefNameToCode((q('prefecture') && q('prefecture').value) || ''),
-        [formNameMap['address']]: (q('address') && q('address').value) || '',
-        [formNameMap['tel1']]: (q('tel1') && q('tel1').value) || '',
-        [formNameMap['tel2']]: (q('tel2') && q('tel2').value) || '',
-        [formNameMap['tel3']]: (q('tel3') && q('tel3').value) || '',
-      }
-
-      if(doSend && endpoint){
-        try{
-          const res = await fetch(endpoint, {method:'POST', body: new URLSearchParams(payload), redirect: 'follow'})
-          let msg = res.ok ? `成功: ${serial} (HTTP ${res.status})` : `失敗: ${serial} (HTTP ${res.status})`
-          if(res.redirected){
-            msg += ` → リダイレクト先: ${res.url}`
-          }
-          // show a short snippet of the response body for debugging
-          try{
-            const text = await res.text()
-            if(text && text.trim()){
-              const snippet = text.trim().replace(/\s+/g,' ').slice(0,30)
-              msg += `\nレスポンス: ${snippet}${text.length>30? '…': ''}`
-            }
-          }catch(_){ /* ignore body read errors */ }
-          entry.textContent = msg
-        }catch(e){
-          entry.textContent = `エラー: ${serial} (${e.message})`
-        }
-      } else {
-        // simulate
-        entry.textContent = `シミュレーション: ${serial}`
-      }
-
-      await sleep(delay)
+    const invalid = lines.filter(l => !isValidSerial(l))
+    if(invalid.length){
+      if(textarea) textarea.classList.add('invalid')
+      alert('以下のシリアルは無効です（8桁の英数字のみ）：\n' + invalid.join('\n'))
+      return
+    } else {
+      if(textarea) textarea.classList.remove('invalid')
     }
 
-    setButtonsRunning(false)
-    if(stopRequested) statusEl.appendChild(document.createElement('div')).textContent = '途中で停止しました'
-    else statusEl.appendChild(document.createElement('div')).textContent = '送信が完了しました'
+    const endpoint = (q('endpoint') && q('endpoint').value || '').trim() || 'https://krs.bz/kingrecords/m/9n3e6k7'
+
+    const baseParams = new URLSearchParams()
+    baseParams.append('__commit', commonFixedValues['__commit'])
+    baseParams.append('__name', commonFixedValues['__name'])
+    baseParams.append('__search_e_23171', fixedValues['__search_e_23171'])
+    baseParams.append('f', fixedValues['f'])
+
+    baseParams.append(formNameMap['present'], (form.querySelector('input[name="present"]:checked') || {}).value || '')
+    baseParams.append(formNameMap['noime_kai_venue1'], (form.querySelector('input[name="noime_kai_venue1"]:checked') || {}).value || '')
+    baseParams.append(formNameMap['noime_kai_venue2'], (form.querySelector('input[name="noime_kai_venue2"]:checked') || {}).value || '')
+    baseParams.append(formNameMap['kosatsu_member'], (form.querySelector('input[name="kosatsu_member"]:checked') || {}).value || '')
+    baseParams.append(formNameMap['sign_poster_member'], (form.querySelector('input[name="sign_poster_member"]:checked') || {}).value || '')
+    baseParams.append(formNameMap['email'], (q('email') && q('email').value) || '')
+    baseParams.append(formNameMap['name'], (q('name') && q('name').value) || '')
+    baseParams.append(formNameMap['name_kana'], (q('name_kana') && q('name_kana').value) || '')
+    baseParams.append(formNameMap['age'], (q('age') && q('age').value) || '')
+    baseParams.append(formNameMap['gender'], genderToCode((form.querySelector('input[name="gender"]:checked') || {}).value || ''))
+    baseParams.append(formNameMap['zip1'], (q('zip1') && q('zip1').value) || '')
+    baseParams.append(formNameMap['zip2'], (q('zip2') && q('zip2').value) || '')
+    baseParams.append(formNameMap['prefecture'], prefNameToCode((q('prefecture') && q('prefecture').value) || ''))
+    baseParams.append(formNameMap['address'], (q('address') && q('address').value) || '')
+    baseParams.append(formNameMap['tel1'], (q('tel1') && q('tel1').value) || '')
+    baseParams.append(formNameMap['tel2'], (q('tel2') && q('tel2').value) || '')
+    baseParams.append(formNameMap['tel3'], (q('tel3') && q('tel3').value) || '')
+    if (q('agree') && q('agree').checked) {
+      baseParams.append(formNameMap['agree'], '1')
+    }
+
+    const serialKey = formNameMap['serial']
+    const baseParamStr = baseParams.toString()
+    const serialListStr = lines.map(s => `  "${s}"`).join('\n')
+
+    const script = `#!/bin/bash
+
+# 入力されたシリアルナンバー一覧
+SERIALS=(
+${serialListStr}
+)
+
+ENDPOINT='${endpoint}'
+SERIAL_KEY='${serialKey}'
+BASE_PARAMS='${baseParamStr}'
+
+for serial in "\${SERIALS[@]}"; do
+  echo "送信中: \${serial}"
+  curl -X POST "\${ENDPOINT}" \\
+    -L \\
+    -H 'Content-Type: application/x-www-form-urlencoded' \\
+    -d "\${SERIAL_KEY}=\${serial}&\${BASE_PARAMS}"
+  echo -e "\\n----------------------------------------"
+  sleep 10
+done
+`
+
+    if(curlOutput) curlOutput.value = script
+    if(copyBtn) copyBtn.disabled = false
+    if(copyMsg) copyMsg.textContent = ''
   }
 
-  if(startBtn) startBtn.addEventListener('click', ()=>{ stopRequested = false; sendSequence() })
-  if(stopBtn) stopBtn.addEventListener('click', ()=>{ stopRequested = true; setButtonsRunning(false) })
+  if(generateBtn) generateBtn.addEventListener('click', generateCurlCommands)
+  if(copyBtn) {
+    copyBtn.addEventListener('click', async () => {
+      if(!curlOutput || !curlOutput.value) return
+      try {
+        await navigator.clipboard.writeText(curlOutput.value)
+        if(copyMsg) copyMsg.textContent = 'クリップボードにコピーしました！'
+      } catch(e) {
+        curlOutput.select()
+        document.execCommand('copy')
+        if(copyMsg) copyMsg.textContent = 'クリップボードにコピーしました！'
+      }
+    })
+  }
 
 })

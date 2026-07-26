@@ -122,19 +122,18 @@
       </div>
 
       <fieldset>
-        <legend>送信設定</legend>
+        <legend>curlスクリプト生成</legend>
         <label>送信先URL
           <input id="endpoint" type="url" value="https://krs.bz/kingrecords/m/9n3e6k7" placeholder="https://example.com/submit">
         </label>
-        <label><input id="do-send" type="checkbox"> 実際に送信する</label>
-        <label>送信間隔 (ms)
-          <input id="delay" type="number" min="0" value="500">
-        </label>
         <div class="actions">
-          <button type="button" id="start-send">送信開始</button>
-          <button type="button" id="stop-send" disabled>停止</button>
+          <button type="button" id="generate-curl">curlスクリプト作成</button>
+          <button type="button" id="copy-curl" disabled>コピー</button>
         </div>
-        <div id="send-status" class="send-status" aria-live="polite"></div>
+        <div id="copy-message" class="copy-message" aria-live="polite" style="margin-top: 0.25rem; font-size: 0.9rem; color: #2b6cb0;"></div>
+        <label style="margin-top: 0.75rem;">生成されたシェルスクリプト
+          <textarea id="curl-output" rows="10" readonly placeholder="「curlスクリプト作成」ボタンを押すとここに表示されます"></textarea>
+        </label>
       </fieldset>
     </form>
 

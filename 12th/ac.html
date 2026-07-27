@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>12th『愛くださいませ/ここでファーストキッス』Type-A, C - シリアルまとめて入力</title>
   <link rel="stylesheet" href="../assets/css/style.css">
-  <script defer src="../assets/js/main.12.js"></script>
 </head>
 <body>
   <main class="container">
@@ -139,5 +138,44 @@
 
     <p><a href="../">トップに戻る</a></p>
   </main>
+
+  <!-- シングル固有設定 -->
+  <script id="single-config" type="application/json">
+  {
+    "formNameMap": {
+      "serial": "e_23164",
+      "present": "e_23166",
+      "noime_kai_venue1": "e_23296",
+      "noime_kai_venue2": "e_23298",
+      "kosatsu_member": "e_23300",
+      "sign_poster_member": "e_23306",
+      "email": "e_23167",
+      "name": "e_23175",
+      "name_kana": "e_23168",
+      "age": "e_23169",
+      "gender": "e_23170",
+      "zip1": "e_23171[zip1]",
+      "zip2": "e_23171[zip2]",
+      "prefecture": "e_23181",
+      "address": "e_23172",
+      "tel1": "e_23173[tel1]",
+      "tel2": "e_23173[tel2]",
+      "tel3": "e_23173[tel3]",
+      "agree": "e_23174[value][]"
+    },
+    "fixedValues": {
+      "__search_e_23171": "",
+      "f": "3130"
+    },
+    "defaultEndpoint": "https://krs.bz/kingrecords/m/9n3e6k7",
+    "conditionalFieldsets": {
+      "2": "noime-kai-venue1-fieldset",
+      "4": "kosatsu-member-fieldset",
+      "5": "sign-poster-member-fieldset"
+    }
+  }
+  </script>
+  <script src="../assets/js/common.js"></script>
+  <script defer src="../assets/js/form-engine.js"></script>
 </body>
 </html>

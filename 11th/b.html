@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>11th『排他的ファイター』Type-B - シリアルまとめて入力</title>
   <link rel="stylesheet" href="../assets/css/style.css">
-  <script defer src="../assets/js/main.11.js"></script>
 </head>
 <body>
   <main class="container">
@@ -24,15 +23,15 @@
       </fieldset>
 
       <label>メールアドレス
-        <input id="email" type="email">
+        <input id="email" type="email" autocomplete="email">
       </label>
 
       <label>氏名
-        <input id="name" type="text">
+        <input id="name" type="text" autocomplete="name">
       </label>
 
       <label>フリガナ
-        <input id="name_kana" type="text">
+        <input id="name_kana" type="text" autocomplete="name">
       </label>
 
       <label>年齢
@@ -48,7 +47,7 @@
       <div class="row">
         <label>郵便番号
           <div class="inline">
-            <input id="zip1" maxlength="3" size="3"> - <input id="zip2" maxlength="4" size="4">
+            <input id="zip1" maxlength="3" size="3" autocomplete="postal-code"> - <input id="zip2" maxlength="4" size="4" autocomplete="postal-code">
             <button type="button" id="zip-lookup">住所を自動入力</button>
           </div>
         </label>
@@ -59,13 +58,13 @@
       </label>
 
       <label>住所（都道府県以降）
-        <input id="address" type="text">
+        <input id="address" type="text" autocomplete="street-address">
       </label>
 
       <div class="row">
         <label>電話番号
           <div class="inline">
-            <input id="tel1" maxlength="5" size="5"> - <input id="tel2" maxlength="4" size="4"> - <input id="tel3" maxlength="4" size="4">
+            <input id="tel1" maxlength="5" size="5" autocomplete="tel"> - <input id="tel2" maxlength="4" size="4" autocomplete="tel"> - <input id="tel3" maxlength="4" size="4" autocomplete="tel">
           </div>
         </label>
       </div>
@@ -78,23 +77,52 @@
       </div>
 
       <fieldset>
-        <legend>送信設定</legend>
+        <legend>curlスクリプト生成</legend>
         <label>送信先URL
           <input id="endpoint" type="url" value="https://krs.bz/kingrecords/m/d39ch9m" placeholder="https://example.com/submit">
         </label>
-        <label><input id="do-send" type="checkbox"> 実際に送信する</label>
-        <label>送信間隔 (ms)
-          <input id="delay" type="number" min="0" value="500">
-        </label>
         <div class="actions">
-          <button type="button" id="start-send">送信開始</button>
-          <button type="button" id="stop-send" disabled>停止</button>
+          <button type="button" id="generate-curl">curlスクリプト作成</button>
+          <button type="button" id="copy-curl" disabled>コピー</button>
         </div>
-        <div id="send-status" class="send-status" aria-live="polite"></div>
+        <div id="copy-message" class="copy-message" aria-live="polite" style="margin-top: 0.25rem; font-size: 0.9rem; color: #2b6cb0;"></div>
+        <label style="margin-top: 0.75rem;">生成されたシェルスクリプト
+          <textarea id="curl-output" rows="10" readonly placeholder="「curlスクリプト作成」ボタンを押すとここに表示されます"></textarea>
+        </label>
       </fieldset>
     </form>
 
     <p><a href="../">トップに戻る</a></p>
   </main>
+
+  <!-- シングル固有設定 -->
+  <script id="single-config" type="application/json">
+  {
+    "formNameMap": {
+      "serial": "e_19870",
+      "present": "e_19890",
+      "email": "e_19877",
+      "name": "e_19874",
+      "name_kana": "e_19880",
+      "age": "e_19876",
+      "gender": "e_19889",
+      "zip1": "e_19871[zip1]",
+      "zip2": "e_19871[zip2]",
+      "prefecture": "e_19872",
+      "address": "e_19873",
+      "tel1": "e_19875[tel1]",
+      "tel2": "e_19875[tel2]",
+      "tel3": "e_19875[tel3]",
+      "agree": "e_19888[value][]"
+    },
+    "fixedValues": {
+      "__search_e_19871": "",
+      "f": "2744"
+    },
+    "defaultEndpoint": "https://krs.bz/kingrecords/m/d39ch9m"
+  }
+  </script>
+  <script src="../assets/js/common.js"></script>
+  <script defer src="../assets/js/form-engine.js"></script>
 </body>
 </html>

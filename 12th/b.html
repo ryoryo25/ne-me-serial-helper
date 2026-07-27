@@ -15,15 +15,29 @@
         <textarea id="serial" rows="5" placeholder="1行に1つずつ入力してください"></textarea>
       </label>
 
-      <fieldset>
-        <legend>プレゼント番号</legend>
-        <label><input type="radio" name="present" value="1" checked> 1</label>
-        <label><input type="radio" name="present" value="2"> 2</label>
-        <label><input type="radio" name="present" value="3"> 3</label>
-      </fieldset>
+      <label>ご希望のメンバー
+        <select id="member">
+          <option value="" selected>選択してください</option>
+          <option value="1">尾木波菜</option>
+          <option value="2">落合希来里</option>
+          <option value="3">蟹沢萌子</option>
+          <option value="4">河口夏音</option>
+          <option value="5">川中子奈月心</option>
+          <option value="6">櫻井もも</option>
+          <option value="7">鈴木瞳美</option>
+          <option value="8">谷崎早耶</option>
+          <option value="9">冨田菜々風</option>
+          <option value="10">永田詩央里</option>
+          <option value="11">本田珠由記</option>
+        </select>
+      </label>
 
       <label>メールアドレス
         <input id="email" type="email" autocomplete="email">
+      </label>
+
+      <label>ニックネーム（10文字以内）
+        <input id="nickname" type="text" maxlength="10">
       </label>
 
       <label>氏名
@@ -47,7 +61,7 @@
       <div class="row">
         <label>郵便番号
           <div class="inline">
-            <input id="zip1" maxlength="3" size="3" autocomplete="postal-code"> - <input id="zip2" maxlength="4" size="4" autocomplete="postal-code">
+            <input id="zip1" maxlength="3" size="3" autocomplete="postal-code1"> - <input id="zip2" maxlength="4" size="4" autocomplete="postal-code2">
             <button type="button" id="zip-lookup">住所を自動入力</button>
           </div>
         </label>
@@ -64,7 +78,7 @@
       <div class="row">
         <label>電話番号
           <div class="inline">
-            <input id="tel1" maxlength="5" size="5" autocomplete="tel"> - <input id="tel2" maxlength="4" size="4" autocomplete="tel"> - <input id="tel3" maxlength="4" size="4" autocomplete="tel">
+            <input id="tel1" maxlength="5" size="5" autocomplete="tel1"> - <input id="tel2" maxlength="4" size="4" autocomplete="tel2"> - <input id="tel3" maxlength="4" size="4" autocomplete="tel3">
           </div>
         </label>
       </div>
@@ -79,7 +93,7 @@
       <fieldset>
         <legend>curlスクリプト生成</legend>
         <label>送信先URL
-          <input id="endpoint" type="url" value="https://krs.bz/kingrecords/m/d39ch9m" placeholder="https://example.com/submit">
+          <input id="endpoint" type="url" value="https://krs.bz/kingrecords/m/s4m5f2t" placeholder="https://example.com/submit">
         </label>
         <div class="actions">
           <button type="button" id="generate-curl">curlスクリプト作成</button>
@@ -99,27 +113,30 @@
   <script id="single-config" type="application/json">
   {
     "formNameMap": {
-      "serial": "e_23164",
-      "present": "e_23166",
-      "email": "e_23167",
-      "name": "e_23175",
-      "name_kana": "e_23168",
-      "age": "e_23169",
-      "gender": "e_23170",
-      "zip1": "e_23171[zip1]",
-      "zip2": "e_23171[zip2]",
-      "prefecture": "e_23181",
-      "address": "e_23172",
-      "tel1": "e_23173[tel1]",
-      "tel2": "e_23173[tel2]",
-      "tel3": "e_23173[tel3]",
-      "agree": "e_23174[value][]"
+      "serial": "e_23228",
+      "member": "e_23237",
+      "email": "e_23235",
+      "nickname": "e_23240",
+      "name": "e_23232",
+      "name_kana": "e_23238",
+      "age": "e_23234",
+      "gender": "e_23247",
+      "zip1": "e_23229[zip1]",
+      "zip2": "e_23229[zip2]",
+      "prefecture": "e_23230",
+      "address": "e_23231",
+      "tel1": "e_23233[tel1]",
+      "tel2": "e_23233[tel2]",
+      "tel3": "e_23233[tel3]",
+      "agree": "e_23248[value][]"
     },
     "fixedValues": {
-      "__search_e_23171": "",
-      "f": "3130"
+      "__search_e_23229": "",
+      "e_23249": "",
+      "e_23250": "",
+      "f": "3136"
     },
-    "defaultEndpoint": "https://krs.bz/kingrecords/m/d39ch9m"
+    "defaultEndpoint": "https://krs.bz/kingrecords/m/s4m5f2t"
   }
   </script>
   <script src="../assets/js/common.js"></script>

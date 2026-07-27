@@ -2,6 +2,24 @@ document.addEventListener('DOMContentLoaded', () => {
   function q(id){return document.getElementById(id)}
 
   const present = q('present-fieldset')
+
+  // 申込期限を過ぎたプレゼント選択肢を非表示にする
+  if(present){
+    const now = new Date()
+    const labels = present.querySelectorAll('label[data-deadline]')
+    let hiddenCount = 0
+    labels.forEach(label => {
+      const deadline = new Date(label.dataset.deadline)
+      if(now >= deadline){
+        label.style.display = 'none'
+        hiddenCount++
+      }
+    })
+    // すべての選択肢が期限切れの場合、fieldset自体を非表示
+    if(hiddenCount === labels.length){
+      present.hidden = true
+    }
+  }
   const noimeKaiVenue1 = q('noime-kai-venue1-fieldset')
   const noimeKaiVenue2 = q('noime-kai-venue2-fieldset')
   const kosatsuMember = q('kosatsu-member-fieldset')
